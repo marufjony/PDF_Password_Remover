@@ -13,4 +13,21 @@ def remove_password(pdf_file, output_dir):
                     for page_num in range(len(pdf_reader.pages)):
                         pdf_writer.add_page(pdf_reader.pages[pages_num])
                         pdf_writer.write(output_file)
+                    print(f"Password removed from {pdf_file}.")
+                else:
+                    print(f"No password found for {pdf_file}.")
+            except Exception as e:
+                print(f"Error processing {pdf_file}: {str(e)}")
 
+def remove_password_in_folder(input_folder, output_folder):
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    for filename in os.listdir(input_folder):
+        if filename.endswith('.pdf'):
+            pdf_file = os.path.join(input_folder, filename)
+            remove_password(pdf_file, output_folder)
+
+if __name__ == "__main__":
+    input_folder = "input_pdfs"
+    output_folder = "output_pdfs"
+    remove_passwords_in_folder(input_folder, output_folder)
